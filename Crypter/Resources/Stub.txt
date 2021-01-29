@@ -13,7 +13,7 @@ namespace Stub
             {
                 byte[] _File = new byte[_Stream.Length];
 
-                _Stream.Read(_File, 0, _File.Length);
+                _Stream.Read(_File, 0x0, _File.Length);
 
                 _File = AES(_File, "#PASSWORD");
 
