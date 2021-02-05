@@ -17,9 +17,11 @@ namespace Crypter
             using (OpenFileDialog _Open_File_Dialog = new OpenFileDialog())
             {
                 _Open_File_Dialog.Filter = "Executable (*.exe)|*.exe";
-                _Open_File_Dialog.ShowDialog();
 
-                TextBox1.Text = _Open_File_Dialog.FileName;
+                if (_Open_File_Dialog.ShowDialog().Equals(DialogResult.OK))
+                {
+                    TextBox1.Text = _Open_File_Dialog.FileName;
+                }
             }
         }
 
@@ -28,13 +30,15 @@ namespace Crypter
             using (SaveFileDialog _Save_File_Dialog = new SaveFileDialog())
             {
                 _Save_File_Dialog.Filter = "Executable (*.exe)|*.exe";
-                _Save_File_Dialog.ShowDialog();
 
-                File.WriteAllBytes("TempFile", new Encryption().AES(File.ReadAllBytes(TextBox1.Text), "#PASSWORD"));
+                if (_Save_File_Dialog.ShowDialog().Equals(DialogResult.OK))
+                {
+                    File.WriteAllBytes("TempFile", new Encryption().AES(File.ReadAllBytes(TextBox1.Text), "#PASSWORD"));
 
-                new Compiler().Build(Properties.Resources.Stub, "TempFile", _Save_File_Dialog.FileName);
+                    new Compiler().Build(Properties.Resources.Stub, "TempFile", _Save_File_Dialog.FileName);
 
-                File.Delete("TempFile");
+                    File.Delete("TempFile");
+                }
             }
         }
     }
